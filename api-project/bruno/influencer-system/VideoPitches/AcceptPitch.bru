@@ -1,0 +1,30 @@
+meta {
+  name: Accept Pitch
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/api/pitches/{{pitchId}}/accept
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authToken}}
+}
+
+headers {
+  Accept: application/json
+}
+
+body:json {
+  {
+    "note": "Love it. Let's connect."
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.body.data.status: eq accepted
+}

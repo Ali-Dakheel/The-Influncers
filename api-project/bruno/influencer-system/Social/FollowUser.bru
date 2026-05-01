@@ -1,0 +1,23 @@
+meta {
+  name: Follow User
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/api/users/{{targetUserId}}/follow
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authToken}}
+}
+
+headers {
+  Accept: application/json
+}
+
+assert {
+  res.status: eq 201
+}

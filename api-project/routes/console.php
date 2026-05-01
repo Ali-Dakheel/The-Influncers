@@ -10,3 +10,4 @@ Artisan::command('inspire', function () {
 
 Schedule::command('campaigns:remind-deadlines')->dailyAt('09:00');
 Schedule::command('campaigns:close-expired')->hourly();
+Schedule::command('content:archive')->dailyAt('03:00');

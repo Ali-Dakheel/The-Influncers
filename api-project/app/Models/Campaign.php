@@ -6,8 +6,10 @@ use App\Enums\CampaignCategory;
 use App\Enums\CampaignFormat;
 use App\Enums\CampaignObjective;
 use App\Enums\CampaignState;
+use App\Observers\CampaignObserver;
 use Database\Factories\CampaignFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -35,7 +37,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
     'paused_at',
     'closed_at',
     'completed_at',
+    'is_urgent',
+    'urgent_expires_at',
+    'archived_at',
 ])]
+#[ObservedBy([CampaignObserver::class])]
 class Campaign extends Model
 {
     /** @use HasFactory<CampaignFactory> */
@@ -57,6 +63,9 @@ class Campaign extends Model
             'paused_at' => 'datetime',
             'closed_at' => 'datetime',
             'completed_at' => 'datetime',
+            'is_urgent' => 'boolean',
+            'urgent_expires_at' => 'datetime',
+            'archived_at' => 'datetime',
         ];
     }
 

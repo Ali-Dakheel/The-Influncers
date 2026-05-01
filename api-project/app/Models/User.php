@@ -119,6 +119,16 @@ class User extends Authenticatable
         return $this->hasMany(Payment::class, 'influencer_id');
     }
 
+    public function follows(): HasMany
+    {
+        return $this->hasMany(Follow::class, 'follower_id');
+    }
+
+    public function followers(): HasMany
+    {
+        return $this->hasMany(Follow::class, 'followed_id');
+    }
+
     public function invoices(): HasMany
     {
         return $this->hasMany(Invoice::class, 'recipient_id');

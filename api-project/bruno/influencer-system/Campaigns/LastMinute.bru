@@ -1,0 +1,23 @@
+meta {
+  name: Last-Minute Marketplace
+  type: http
+  seq: 8
+}
+
+get {
+  url: {{baseUrl}}/api/campaigns/last-minute
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authToken}}
+}
+
+headers {
+  Accept: application/json
+}
+
+assert {
+  res.status: eq 200
+}

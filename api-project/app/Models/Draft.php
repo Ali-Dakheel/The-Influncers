@@ -22,6 +22,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
     'reviewed_at',
     'reviewed_by',
     'review_note',
+    'archived_at',
 ])]
 class Draft extends Model
 {
@@ -36,6 +37,7 @@ class Draft extends Model
             'revision_number' => 'integer',
             'submitted_at' => 'datetime',
             'reviewed_at' => 'datetime',
+            'archived_at' => 'datetime',
         ];
     }
 

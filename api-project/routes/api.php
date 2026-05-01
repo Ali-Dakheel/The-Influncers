@@ -17,6 +17,7 @@ use App\Http\Controllers\Brand\EmergencyStopController;
 use App\Http\Controllers\Campaign\CampaignController;
 use App\Http\Controllers\Campaign\CloseCampaignController;
 use App\Http\Controllers\Campaign\CompleteCampaignController;
+use App\Http\Controllers\Campaign\LastMinuteCampaignsController;
 use App\Http\Controllers\Campaign\PauseCampaignController;
 use App\Http\Controllers\Campaign\PublishCampaignController;
 use App\Http\Controllers\Creator\CalendarController;
@@ -34,7 +35,10 @@ use App\Http\Controllers\Reporting\ReportingController;
 use App\Http\Controllers\Reputation\RatingController;
 use App\Http\Controllers\Sales\SalesAttributionController;
 use App\Http\Controllers\Sales\SalesDashboardController;
+use App\Http\Controllers\Social\FeedController;
+use App\Http\Controllers\Social\FollowController;
 use App\Http\Controllers\Stripe\OnboardController;
+use App\Http\Controllers\VideoPitch\VideoPitchController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('register', RegisterController::class)->name('register');
@@ -58,6 +62,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('email/verification-notification', SendVerificationNotificationController::class)
         ->middleware('throttle:6,1')
         ->name('verification.send');
+
+    // Static campaign routes must come BEFORE the apiResource so they don't collide with /campaigns/{campaign}
+    Route::get('campaigns/last-minute', LastMinuteCampaignsController::class)->name('campaigns.last-minute');
 
     Route::apiResource('campaigns', CampaignController::class);
     Route::post('campaigns/{campaign}/publish', PublishCampaignController::class)->name('campaigns.publish');
@@ -128,4 +135,18 @@ Route::middleware('auth:sanctum')->group(function () {
     // Reporting
     Route::get('reports/aggregate', [ReportingController::class, 'aggregate'])->name('reports.aggregate');
     Route::get('reports/export', [ReportingController::class, 'export'])->name('reports.export');
+
+    // Video pitches
+    Route::post('pitches', [VideoPitchController::class, 'send'])->name('pitches.send');
+    Route::get('pitches/mine', [VideoPitchController::class, 'mine'])->name('pitches.mine');
+    Route::get('pitches/{pitch}', [VideoPitchController::class, 'show'])->name('pitches.show');
+    Route::post('pitches/{pitch}/accept', [VideoPitchController::class, 'accept'])->name('pitches.accept');
+    Route::post('pitches/{pitch}/reject', [VideoPitchController::class, 'reject'])->name('pitches.reject');
+
+    // Social: follow + feed
+    Route::post('users/{user}/follow', [FollowController::class, 'follow'])->name('users.follow');
+    Route::delete('users/{user}/follow', [FollowController::class, 'unfollow'])->name('users.unfollow');
+    Route::get('me/following', [FollowController::class, 'following'])->name('users.following');
+    Route::get('me/followers', [FollowController::class, 'followers'])->name('users.followers');
+    Route::get('me/feed', FeedController::class)->name('feed');
 });
