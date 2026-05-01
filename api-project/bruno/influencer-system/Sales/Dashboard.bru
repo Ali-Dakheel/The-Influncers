@@ -1,0 +1,23 @@
+meta {
+  name: Sales Dashboard (admin)
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/api/me/sales-dashboard
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authToken}}
+}
+
+headers {
+  Accept: application/json
+}
+
+assert {
+  res.status: eq 200
+}

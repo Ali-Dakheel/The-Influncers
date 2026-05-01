@@ -13,8 +13,16 @@ This file documents the structure of `.env` (which is not read by Claude). Updat
 ## Mail (Sprint 0)
 - `MAIL_MAILER=log` — writes to `storage/logs/laravel.log`
 
-## Queue (introduced Sprint 5)
+## Queue (Sprint 5 onwards)
 - `QUEUE_CONNECTION=database` — DB-driver queue, no Redis
+- Run worker locally: `php artisan queue:work` (or `composer dev` which starts server + queue + pail concurrently)
+- Notifications implement `ShouldQueue` and ship through this queue.
+
+## Scheduler (Sprint 5)
+- `routes/console.php` schedules:
+  - `campaigns:remind-deadlines` daily at 09:00 — pings accepted influencers with deadlines within 24h
+  - `campaigns:close-expired` hourly — auto-closes campaigns past `ends_on`
+- Run scheduler locally: `php artisan schedule:work`
 
 ## Filesystem (Sprint 0)
 - `FILESYSTEM_DISK=public` — local public disk
@@ -23,6 +31,8 @@ This file documents the structure of `.env` (which is not read by Claude). Updat
 - `STRIPE_KEY=pk_test_...`
 - `STRIPE_SECRET=sk_test_...`
 - `STRIPE_WEBHOOK_SECRET=whsec_...`
+
+**Note:** Sprint 7 ships with `App\Services\Stripe\StubStripeService` bound by default in `AppServiceProvider::register()`. It returns deterministic fake account/intent/transfer IDs so the full payment flow works without real Stripe keys. To go live: install `stripe/stripe-php`, write a real `StripeService` implementation, and swap the binding.
 
 ## Bruno API client
 

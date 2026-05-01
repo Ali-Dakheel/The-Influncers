@@ -1,0 +1,32 @@
+meta {
+  name: Set Price List Item
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{baseUrl}}/api/me/price-list/items
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authToken}}
+}
+
+headers {
+  Accept: application/json
+}
+
+body:json {
+  {
+    "platform": "instagram",
+    "format": "reel",
+    "price_cents": 250000,
+    "currency": "USD"
+  }
+}
+
+assert {
+  res.status: eq 201
+}

@@ -1,0 +1,30 @@
+meta {
+  name: Request Changes
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{baseUrl}}/api/drafts/{{draftId}}/request-changes
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authToken}}
+}
+
+headers {
+  Accept: application/json
+}
+
+body:json {
+  {
+    "note": "Please brighten the lighting in the second clip and re-shoot."
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.body.data.status: eq changes_requested
+}

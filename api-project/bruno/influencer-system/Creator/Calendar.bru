@@ -1,0 +1,23 @@
+meta {
+  name: My Calendar
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{baseUrl}}/api/me/calendar
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authToken}}
+}
+
+headers {
+  Accept: application/json
+}
+
+assert {
+  res.status: eq 200
+}

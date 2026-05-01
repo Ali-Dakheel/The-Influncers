@@ -1,0 +1,30 @@
+meta {
+  name: Reject Application
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{baseUrl}}/api/applications/{{applicationId}}/reject
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authToken}}
+}
+
+headers {
+  Accept: application/json
+}
+
+body:json {
+  {
+    "note": "Audience does not match brief."
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.body.data.status: eq rejected
+}

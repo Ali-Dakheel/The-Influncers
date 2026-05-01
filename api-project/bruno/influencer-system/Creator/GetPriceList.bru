@@ -1,0 +1,23 @@
+meta {
+  name: Get My Price List
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/api/me/price-list
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authToken}}
+}
+
+headers {
+  Accept: application/json
+}
+
+assert {
+  res.status: eq 200
+}

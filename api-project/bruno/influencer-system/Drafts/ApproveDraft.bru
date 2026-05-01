@@ -1,0 +1,30 @@
+meta {
+  name: Approve Draft
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/api/drafts/{{draftId}}/approve
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authToken}}
+}
+
+headers {
+  Accept: application/json
+}
+
+body:json {
+  {
+    "note": "Looks great. Approved."
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.body.data.status: eq approved
+}

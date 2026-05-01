@@ -1,0 +1,31 @@
+meta {
+  name: Rate Influencer (after campaign)
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/api/applications/{{applicationId}}/rating
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authToken}}
+}
+
+headers {
+  Accept: application/json
+}
+
+body:json {
+  {
+    "score": 5,
+    "text": "Outstanding work — on time, on brief, and great communication."
+  }
+}
+
+assert {
+  res.status: eq 201
+  res.body.data.score: eq 5
+}

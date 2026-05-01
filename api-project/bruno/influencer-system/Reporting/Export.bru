@@ -1,0 +1,23 @@
+meta {
+  name: Export Report (JSON download)
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/api/reports/export
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authToken}}
+}
+
+headers {
+  Accept: application/json
+}
+
+assert {
+  res.status: eq 200
+}

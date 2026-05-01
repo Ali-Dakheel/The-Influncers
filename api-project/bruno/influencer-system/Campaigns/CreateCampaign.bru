@@ -1,0 +1,44 @@
+meta {
+  name: Create Campaign
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/api/campaigns
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authToken}}
+}
+
+headers {
+  Accept: application/json
+}
+
+body:json {
+  {
+    "title": "Spring Drop",
+    "description": "Showcase the spring collection across IG and TikTok.",
+    "deliverables": "1 reel + 3 stories per influencer",
+    "category": "fashion",
+    "platforms": ["instagram", "tiktok"],
+    "format": "reel",
+    "objective": "engagement",
+    "budget_cents": 500000,
+    "currency": "USD"
+  }
+}
+
+assert {
+  res.status: eq 201
+  res.body.data.state: eq draft
+}
+
+script:post-response {
+  if (res.body.data && res.body.data.id) {
+    bru.setEnvVar("campaignId", res.body.data.id);
+  }
+}

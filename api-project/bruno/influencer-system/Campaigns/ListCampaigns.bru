@@ -1,0 +1,23 @@
+meta {
+  name: List Campaigns
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/api/campaigns
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authToken}}
+}
+
+headers {
+  Accept: application/json
+}
+
+assert {
+  res.status: eq 200
+}

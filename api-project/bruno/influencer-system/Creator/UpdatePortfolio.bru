@@ -1,0 +1,38 @@
+meta {
+  name: Update My Portfolio
+  type: http
+  seq: 2
+}
+
+patch {
+  url: {{baseUrl}}/api/me/portfolio
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authToken}}
+}
+
+headers {
+  Accept: application/json
+}
+
+body:json {
+  {
+    "bio": "Sneaker reviewer with 6 years of trusted brand partnerships.",
+    "content_style": ["lifestyle", "fashion", "sports"],
+    "audience_size": 75000,
+    "audience_demographics": {
+      "age_buckets": {"18-24": 30, "25-34": 50, "35-44": 20},
+      "gender_split": {"female": 40, "male": 58, "other": 2}
+    },
+    "past_collabs": [
+      {"brand": "Nike", "year": 2025, "deliverables": "3 reels", "link": "https://example.com/n"}
+    ]
+  }
+}
+
+assert {
+  res.status: eq 200
+}

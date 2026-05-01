@@ -1,0 +1,29 @@
+meta {
+  name: Update My Budget
+  type: http
+  seq: 3
+}
+
+patch {
+  url: {{baseUrl}}/api/me/budget
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authToken}}
+}
+
+headers {
+  Accept: application/json
+}
+
+body:json {
+  {
+    "monthly_budget_cents": 1000000
+  }
+}
+
+assert {
+  res.status: eq 200
+}

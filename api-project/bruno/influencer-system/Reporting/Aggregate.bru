@@ -1,0 +1,27 @@
+meta {
+  name: Aggregate Report
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/api/reports/aggregate?platform=instagram
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authToken}}
+}
+
+params:query {
+  platform: instagram
+}
+
+headers {
+  Accept: application/json
+}
+
+assert {
+  res.status: eq 200
+}

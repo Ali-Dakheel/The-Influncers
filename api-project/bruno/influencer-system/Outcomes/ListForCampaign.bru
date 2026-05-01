@@ -1,0 +1,23 @@
+meta {
+  name: List Outcomes for Campaign
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/api/campaigns/{{campaignId}}/outcomes
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authToken}}
+}
+
+headers {
+  Accept: application/json
+}
+
+assert {
+  res.status: eq 200
+}

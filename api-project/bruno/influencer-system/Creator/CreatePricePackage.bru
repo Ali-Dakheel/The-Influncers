@@ -1,0 +1,38 @@
+meta {
+  name: Create Price Package
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{baseUrl}}/api/me/price-list/packages
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authToken}}
+}
+
+headers {
+  Accept: application/json
+}
+
+body:json {
+  {
+    "name": "5 IG + 5 TikTok + 5 YouTube",
+    "description": "Cross-platform launch bundle",
+    "items": [
+      {"platform": "instagram", "format": "reel", "quantity": 5},
+      {"platform": "tiktok", "format": "video", "quantity": 5},
+      {"platform": "youtube", "format": "video", "quantity": 5}
+    ],
+    "discount_pct": 20,
+    "total_cents": 800000,
+    "currency": "USD"
+  }
+}
+
+assert {
+  res.status: eq 201
+}

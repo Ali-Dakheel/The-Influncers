@@ -1,0 +1,24 @@
+meta {
+  name: Complete Campaign
+  type: http
+  seq: 7
+}
+
+post {
+  url: {{baseUrl}}/api/campaigns/{{campaignId}}/complete
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authToken}}
+}
+
+headers {
+  Accept: application/json
+}
+
+assert {
+  res.status: eq 200
+  res.body.data.state: eq completed
+}

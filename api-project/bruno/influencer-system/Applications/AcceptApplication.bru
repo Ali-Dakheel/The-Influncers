@@ -1,0 +1,30 @@
+meta {
+  name: Accept Application
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{baseUrl}}/api/applications/{{applicationId}}/accept
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authToken}}
+}
+
+headers {
+  Accept: application/json
+}
+
+body:json {
+  {
+    "note": "Strong fit — looking forward to it."
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.body.data.status: eq accepted
+}

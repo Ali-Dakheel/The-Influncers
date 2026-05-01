@@ -1,0 +1,23 @@
+meta {
+  name: My Budget
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/api/me/budget
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authToken}}
+}
+
+headers {
+  Accept: application/json
+}
+
+assert {
+  res.status: eq 200
+}

@@ -1,0 +1,24 @@
+meta {
+  name: Close Campaign
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{baseUrl}}/api/campaigns/{{campaignId}}/close
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authToken}}
+}
+
+headers {
+  Accept: application/json
+}
+
+assert {
+  res.status: eq 200
+  res.body.data.state: eq closed
+}

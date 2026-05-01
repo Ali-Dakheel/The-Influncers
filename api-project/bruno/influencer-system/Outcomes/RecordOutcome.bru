@@ -1,0 +1,33 @@
+meta {
+  name: Record Outcome Metrics
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/api/outcomes/{{outcomeId}}/record
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authToken}}
+}
+
+headers {
+  Accept: application/json
+}
+
+body:json {
+  {
+    "final_post_url": "https://instagram.com/p/abc123",
+    "reach": 50000,
+    "engagement": 4500,
+    "conversions": 200
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.body.data.recorded_at: isString
+}
