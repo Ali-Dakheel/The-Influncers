@@ -12,6 +12,8 @@ class UserResource extends JsonApiResource
     public $attributes = [
         'name',
         'email',
+        'role',
+        'country_id',
         'email_verified_at',
         'created_at',
         'updated_at',

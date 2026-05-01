@@ -1,0 +1,10 @@
+{
+  "version": "1",
+  "name": "influencer-system",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git",
+    "environments"
+  ]
+}

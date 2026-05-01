@@ -1,0 +1,30 @@
+meta {
+  name: Refresh Token
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{baseUrl}}/api/token/refresh
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authToken}}
+}
+
+headers {
+  Accept: application/json
+}
+
+assert {
+  res.status: eq 200
+  res.body.token: isString
+}
+
+script:post-response {
+  if (res.body.token) {
+    bru.setEnvVar("authToken", res.body.token);
+  }
+}
